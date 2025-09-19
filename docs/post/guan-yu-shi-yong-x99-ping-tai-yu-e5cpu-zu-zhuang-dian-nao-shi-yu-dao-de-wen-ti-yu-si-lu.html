@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/215021006?v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 前言：
+这次组装电脑的契机来源于我父亲认识的一位叔叔需要一台便宜耐用的电脑用于工作网店多开和大话西游2的游戏游玩。">
+<meta property="og:title" content="关于使用x99平台与e5cpu组装电脑时遇到的问题与思路">
+<meta property="og:description" content="# 前言：
+这次组装电脑的契机来源于我父亲认识的一位叔叔需要一台便宜耐用的电脑用于工作网店多开和大话西游2的游戏游玩。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://Yves-ly.github.io/Yves/post/guan-yu-shi-yong-x99-ping-tai-yu-e5cpu-zu-zhuang-dian-nao-shi-yu-dao-de-wen-ti-yu-si-lu.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/215021006?v=4">
+<title>关于使用x99平台与e5cpu组装电脑时遇到的问题与思路</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">关于使用x99平台与e5cpu组装电脑时遇到的问题与思路</h1>
+<div class="title-right">
+    <a href="https://Yves-ly.github.io/Yves" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/Yves-ly/Yves/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>前言：</h1>
+<p>这次组装电脑的契机来源于我父亲认识的一位叔叔需要一台便宜耐用的电脑用于工作网店多开和大话西游2的游戏游玩。这位叔叔在联系我之前已经在网络上购买了一台所谓i7级主机，看到名字我便意识到其中可能有诈。让那位叔叔将详细的配置单给我，一份是那家店铺给的配置单，一个是其主机本身的具体配置单。谁曾想，这家店铺不仅仅是在cpu上动手脚，连gpu都用所谓“50系”来骗人，实际上则是使用了RX580显卡。最后收取了这位叔叔3800元多，而其成本价也不过一千多。我为此感到愤怒，一个没有店租水电费压力的网店，却整整赚取了一千多的利润。赚钱没有错，但赚到这种程度已经属于是黑心钱，于是我建议这位叔叔退货退款，并约定由我来组装一台给他，性能更好的同时价格更低。包含键盘鼠标蓝牙WiFi等预设，除了显卡和内存其他都是全新，均使用牌子货。只收取1800，赚约三百内的手工费和硬件差价（我使用了许多优惠券）。</p>
+<h1>配置单</h1>
+<p>CPU：E5-2673 v3 3.1G 12核24线程<br>
+主板：精粤X99M-G D3 ARGB<br>
+内存：三星ECC内存条 8G 1866频率 两条组成16G双通道<br>
+散热：长城冰度2011版四铜管<br>
+显卡：技嘉GTX970 4G　三风扇<br>
+储存：长城GW600 sata3.0 1T<br>
+电源：玄武舰长白牌600W<br>
+机箱：九尾狐T09海景房<br>
+外设：宏基键鼠套装，九尾狐棱镜4pro五个，联想蓝牙5.3，长城WIFI6模块<br>
+总收费：1800</p>
+<h1>问题</h1>
+<p>由于我之前就已经掌握了一定的电脑组装与维修经验，故整个流程并没有遇到过多的问题，仅仅发生两个较为棘手的问题。</p>
+<p>1.第一个问题属于我个人的疏忽，我错误判断了机箱可以容纳的显卡大小，导致我不得不对机箱后侧的防尘盖板和显卡的一部分散热外壳进行切割缩短。才得以正常装入机箱。（E5这类服务器芯片和GTX970的发热都较为严重，而这位叔叔又是用于工作，我希望这台主机可以稳定运行，才选择了三风扇而非双风扇的显卡）这值得我警醒，我对显卡和机箱都做出了无法撤销的修改，这使其美观度于预期有所减少，且这同样会导致可能的售后发生问题。虽然我解决了这个小小的问题，但其隐含在我内心的问题却必须去加以重视和解决————我需要更加的谨慎，更多的去检查，思考，细致。避免再次发生这种本不该发生的错误。</p>
+<p>2.<strong>第二个问题</strong>则是电脑硬件本身的问题，我在完成所有硬件的组装后，发现显示器无法正常工作。于是我开始<strong>检修步骤</strong>：</p>
+<p>(<strong>1</strong>)我将键盘插入USB接口，通过观察num与大小写切换指示灯，可以检验电脑是否正常进行了自检。结果则是无法正常亮灯，说明电脑在自检步骤便出现问题。<br>
+电脑自检无法正常运行，绝大多数问题是在于内存条无法正常运行。于是我将其中一条内存条拔下，单独使用另一条。仍然无法正常运行，我再次拔下另一根内存条，并擦拭其金手指（去除可能存在的表面氧化层）然后再次插入其中一条，仍然不行。于是我计划插入主板的优先内存插槽，但我不清楚其哪一条才是。于是我询问了我所购买主板商家的客服，其告知我优先插入黑色的内存插槽，且主板最高支持16x4的1600频率内存条。随后我将其中一条内存条插入黑色插槽，仍然无法正常运行。我怀疑是内存条本身的问题（我个人的主机同样是此主板，但我可以正常使用三星ECC 8g 1866频率的内存条）于是我从我的主机上拔下一根内存条，插入新主机。num灯终于亮起，并可以切换。这表明电脑的自检通过了！</p>
+<p>(<strong>2</strong>)令人遗憾的是，电脑的显示屏仍然无法正常亮起。主板和线缆都是崭新的，损坏的可能性非常低。于是我开始从显卡上寻找解决的突破口，我切换尝试了显卡上的HDMI接口和DP接口，均无法正常亮屏。我又怀疑可能显卡本身有问题，于是我使用我自己的显卡GTX1060进行测试（显卡本身是好的）仍然无法正常亮屏。我感到疑惑与困顿，这证明问题不出在显卡，既然自检可以通过，那么问题可能存在于显卡，主板，抑或是cpu和系统问题。</p>
+<p>(<strong>3</strong>)这里的问题难住了我许久，最终我再次询问了客服，他没能给出我任何有用的解决方法，但与客服的对话提醒了我一点——我从来没有重新安装过CPU，商家在发货时就已经将CPU装入主板，但快递运输过程中CPU很有可能由于颠颇而与接口针脚有些许错位。于是我决定卸下散热器重新安装一次CPU。再次开机。终于！这一次正常亮屏了，于是我切换回GTX970显卡，再次开机，正常亮屏。我缓了一口气，这证明我所采购和组装的硬件都是没问题的（无法正常使用的内存条我退货了，并换上了两条可以正常使用的三星ECC 8g 1866频率内存条）。然而，问题还没有完全结束。</p>
+<p>(<strong>4</strong>)虽然我在采购之时就使用了长城预安装win10系统的服务，但开机后系统无法正常运行。不过这是小问题，我接入了自己的system盘，重新安装win10家庭版。其中的小问题在于，因为很久没有安装系统，我忘记了该选择哪个地址作为“选择引导驱动器位置”。在经过我的一番查询和检查之后，我发现我在重置硬盘的过程中，忘记了分出EFI和ESP系统分盘，导致安装系统后无法正确引导。经过修正之后，系统正常安装，引导并进入系统界面。自此，这一台主机可以宣布成功部署。可以正常进行操作和使用。</p>
+<h1>后言：</h1>
+<p>这一次组装电脑的机会不仅给了我一个零花钱的赚取窗口，更给了我一次复习和锻炼的机会，使我得以强化电脑组装的技能和解决问题的能力。感谢这位叔叔，感谢我的父亲，如果没有他们，就没有这台主机的诞生，也就没有这篇文章和我所学到的经验了。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://Yves-ly.github.io/Yves">朝文夕拾</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","Yves-ly/Yves");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+
+
+</html>
