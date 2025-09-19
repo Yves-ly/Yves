@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/215021006?v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 前言
+本文仅探讨网址/域名，DNS，IP三者的基础概念与关系，以帮助读者更好的理解互联网通信中的一部分底层逻辑，并助力读者进行个人基础网页的搭建与其运行本质的简单理解。">
+<meta property="og:title" content="关于网页通信的基础概念记录">
+<meta property="og:description" content="# 前言
+本文仅探讨网址/域名，DNS，IP三者的基础概念与关系，以帮助读者更好的理解互联网通信中的一部分底层逻辑，并助力读者进行个人基础网页的搭建与其运行本质的简单理解。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://Yves-ly.github.io/Yves/post/guan-yu-wang-ye-tong-xin-de-ji-chu-gai-nian-ji-lu.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/215021006?v=4">
+<title>关于网页通信的基础概念记录</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">关于网页通信的基础概念记录</h1>
+<div class="title-right">
+    <a href="https://Yves-ly.github.io/Yves" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/Yves-ly/Yves/issues/8" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>本文仅探讨网址/域名，DNS，IP三者的基础概念与关系，以帮助读者更好的理解互联网通信中的一部分底层逻辑，并助力读者进行个人基础网页的搭建与其运行本质的简单理解。 会最后放上个人笔记与辅助图。</p>
+<h1>网址/域名：</h1>
+<p>网址的绝大部分组成构件和基础由蒂姆・伯纳斯 - 李于20世界80年代创建。他发明的超文本传输协议（HTTP）、超文本标记语言（HTML）和统一资源定位符（URL）共同构成了网址的基础。<br>
+网址与域名的关系十分密切，是包含与被包含的关系，其代表的信息与意义也不同。网址中包含了域名，网址可以理解为网络资源的“门牌号”，非常具体的指向了某一资源，是一个精确的访问地址。网址不具有唯一性，结构完整，指向明显。<br>
+如：</p>
+<blockquote>
+<p>示例：https://---www.baidu.com-----/s?wdsje3</p>
+</blockquote>
+<p>而域名则不同，其范围更为广泛，更具有代表性，域名可以理解为网络资源的“身份标识”，具有很强的唯一性，每一个域名都独一无二。域名具有唯一性，结构简单，便于记忆，表意明显。如：</p>
+<blockquote>
+<p>baidu.com</p>
+</blockquote>
+<p>网址/域名的存在与本意实际上非常简单，其目的就是让人们可以更为简单易懂的记忆某一网络资源地址，更为简便的使用互联网工具。<br>
+网址和域名往往会与某一服务器相关联，从而使晦涩难记的IP地址转化为简单易读的网址字符，而这一转化过程离不开一个关键技术——DNS（Domain Name System）即域名系统</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>由于网址和域名相互包含，且实际访问中多以网址为主，故后续涉及到网址/域名的内容，我会以网址表述，除非明确表示为域名</p>
+</div>
+<h1>DNS域名系统</h1>
+<p>DNS是互联网中用于将域名解析为 IP 地址的分布式数据库系统，由保罗・莫卡佩特里斯于20世纪80年代创建。他发明的域名系统解决了早期互联网中主机名到地址转换的问题，将互联网从学术领域扩展到更广泛的应用场景。<br>
+现代中DNS仍然发挥着重要作用，其使用了分布式的工作流程：<br>
+1.首先客户端（浏览器）将用户所输入的网址所需的数据文件请求（html）发送给对此域名负责的DNS服务器<br>
+2.此时DNS服务器会先从缓存或本地预存的DNS配置中解析域名对应的IP地址。若查找得到，则返回给客户端相对应的IP地址。<br>
+3.若查找不到，则向根服务器发送查询请求，在根服务器中查询到此域名对应的顶级域名地址，再从此顶级域名服务器中查找对应的主域名地址，以此类推，查询到客户端输入网址所对应的服务器IP地址，返回给客户端（浏览器）。使客户端与对应服务器建立数据收发联系，最终使网页正常呈现，客户端便完成了一次网址访问。<br>
+而DNS 不仅是 “数据库”，更是一套全球统一的解析协议（定义在 RFC 1034/1035 等标准中），既规定了 “域名的分层格式”（如mail.qq.com的 “二级域名 - 主域名 - 顶级域名” 结构）；又规定了 “查询与响应的报文格式”（如客户端如何发送查询请求、服务器如何返回 IP 或错误信息）；还规定了 “查询模式”（递归查询用于 “用户 - 区域 DNS”，迭代查询用于 “区域DNS - 根 / 顶级域名服务器”）。<br>
+由此可知，DNS本质上就是通过多级查找的方式来将人类可读的网址转化为机器可读的IP地址，通过分层架构和缓存机制确保互联网资源的高效、稳定定位。构建起人类文字记忆与机器数字通信的“桥梁”。</p>
+<h1>服务器/IP地址</h1>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>此文中的互联网均特指公网</p>
+</div>
+<p>网址的最终目的就是使用户可以更加简便的使用某一作者/单位提供的服务。不必多说，构建各种网站的代码，存储信息和与客户端的数据交流，都需要一台机器来支撑。服务器作为可以以高性能长期运转的设备，自然而然构成了各类服务体系的核心后背支柱。<br>
+我们在各类网站，如b站，淘宝，央视频等，本质都是在向其服务器收发数据信息，再由客户端提供前端显示，最终呈现出我们所浏览的网站。本质上也是一种信息获取渠道，只是从旧有的报纸，书籍，口口相传获取转向从互联网世界中包罗万千数据的一台服务器中获取。<br>
+而每一台服务器都是一个设备，互联网中的设备都拥有其专属的标识符，即其IP地址。</p>
+<p>IP地址就像互联网世界中的身份证，互联网中的每一台设备都有其独一无二的IP地址。公网 IP 地址由ICANN（互联网名称与数字地址分配机构） 统一管理，再通过各级机构（如亚太地区的 APNIC、北美地区的 ARIN）分配给 ISP，最终由 ISP 分配给用户或企业。整个分配过程有严格的 “地址池管理”，确保同一时间段内，全球不会有两台设备在互联网中使用相同的公网 IP 地址。<br>
+但由于科技日新月异，互联网设备数量的激增，IPV4的IP地址分配日渐吃紧，于是出现了“动态IP”的特殊现象———动态 IP（Dynamic IP）ISP 会为用户（如家庭宽带）动态分配公网 IP—— 每次重启路由器，公网 IP 可能会变化（从 ISP 的地址池中重新分配）。但同一时间段内，该公网 IP 仍唯一，即使你今天的公网 IP 是220.181.1.1，明天变成220.181.1.2，这两个 IP 在各自使用的时间段内，全球都不会有其他设备同时使用。</p>
+<p>IP地址的独一性也是我们输入网址便能精准访问某一服务器的基础，如果公网服务器的IP地址相同，那DNS岂不是乱套了。因此，IP地址拥有其重要的导向作用，在互联网世界中搭建起一个个信标。没有 IP 地址，全球设备无法识别彼此、数据无法精准传递、不同系统无法协同工作，互联网的 “互联互通” 本质将不复存在 —— 它就像现实世界中的 “街道门牌号”，是支撑整个互联网运转的底层核心，具有不可或缺的重要性。</p>
+<h1>后言</h1>
+<p>本文的内容经过个人思考，AI工具总结，搜索引擎搜索结论和维基百科得出。只涉及基础的概念与原理，若有纰漏之处欢迎斧正！联系方式在主页右上角的关于栏中。</p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/78537f80-557a-4677-b911-10d2008b5a30"><img src="https://github.com/user-attachments/assets/78537f80-557a-4677-b911-10d2008b5a30" alt="Image" style="max-width: 100%;"></a></p></div>
+<div style="font-size:small;margin-top:8px;float:right;">转载请注明出处，谢谢！</div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://Yves-ly.github.io/Yves">朝文夕拾</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("09/18/2025"!=""){
+    var startSite=new Date("09/18/2025");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","Yves-ly/Yves");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+
+
+</html>
